@@ -157,7 +157,7 @@ static Token number() {
 
 static Token string() {
   while (peek() != '"' && !isAtEnd()) {
-    if (peek == '\n') scanner.line++;
+    if (peek() == '\n') scanner.line++;
     advance();
   }
 
