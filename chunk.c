@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "chunk.h"
 #include "memory.h"
@@ -18,6 +19,7 @@ void freeChunk(Chunk* chunk) {
 }
 
 void writeChunk(Chunk* chunk, uint8_t byte, int line) {
+  printf("Writing chunk %d\n", byte);
   if (chunk->capacity < chunk->count + 1) {
     int oldCapacity = chunk->capacity;
     chunk->capacity = GROW_CAPACITY(oldCapacity);
