@@ -28,7 +28,6 @@ static bool isAtEnd() {
 
 static char advance() {
   scanner.current++;
-  printf("-----> {%c}\n", *scanner.current);
   return scanner.current[-1];
 }
 
