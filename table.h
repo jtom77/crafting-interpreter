@@ -27,4 +27,6 @@ bool tableDelete(Table* table, ObjString* key);
 
 void tableAddAll(Table* from, Table* to);
 
+void debugTable(Table* table);
+
 #endif

@@ -6,6 +6,7 @@
 #include "chunk.h"
 #include "debug.h"
 #include "vm.h"
+#include "object.h"
 
 
 static void repl() {
@@ -61,8 +62,42 @@ static void runFile(const char* path) {
 
 }
 
+int main(void) {
+  initVM();                 // required: sets up vm.strings + object list
 
-int main(int argc, const char* argv[]) {
+  Table table;
+  initTable(&table);
+
+  char* entries[3][2] = {
+    {"key1", "val1"},
+    {"key2", "val2"}, 
+    {"key3", "val3"}
+  };
+
+  for (int i=0; i < 2; i++) {
+    printf("Key=%s, Value=%s\n", entries[i][0], entries[i][1]);
+
+    // key and value are both ObjString*, created from C literals
+    ObjString* key = copyString(entries[i][0], 4);
+    ObjString* value = copyString(entries[i][1], 4);
+
+    // store: key is ObjString*, value is a Value wrapping the ObjString*
+    tableSet(&table, key, OBJ_VAL(value));
+
+    // read it back
+    Value retrieved;
+    if (tableGet(&table, key, &retrieved) && IS_STRING(retrieved)) {
+      printf("%s = %s\n", key->chars, AS_CSTRING(retrieved));
+    }
+
+    debugTable(&table);
+  }
+  freeTable(&table);
+  freeVM();
+  return 0;
+}
+
+int main2(int argc, const char* argv[]) {
   initVM();
 
   if (argc == 1) {
@@ -76,32 +111,6 @@ int main(int argc, const char* argv[]) {
 
   Chunk chunk;
   initChunk(&chunk);
-
-  // int constant = addConstant(&chunk, 1.2);
-  // writeChunk(&chunk, OP_CONSTANT, 123);
-  // writeChunk(&chunk, constant, 123);
-
-  // constant = addConstant(&chunk, 3.4);
-  // writeChunk(&chunk, OP_CONSTANT, 123);
-  // writeChunk(&chunk, constant, 123);
-  // writeChunk(&chunk, OP_ADD, 123);
-  
-  
-  // constant = addConstant(&chunk, 5.6);
-  // writeChunk(&chunk, OP_CONSTANT, 123);
-  // writeChunk(&chunk, constant, 123);
-  // writeChunk(&chunk, OP_DIVIDE, 123);
-  
-
-  // writeChunk(&chunk, OP_NEGATE, 123);
-  // writeChunk(&chunk, OP_RETURN, 123);
-
-  
-
-
-  // // disassembleChunk(&chunk, "test_chunk");
-  
-  // interpret(&chunk);
 
   freeVM();
   freeChunk(&chunk);

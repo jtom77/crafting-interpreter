@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "memory.h"
 #include "object.h"
@@ -102,6 +103,14 @@ void tableAddAll(Table* from, Table* to) {
 }
 
 
+void debugTable(Table* table) {
+  for (int i=0; i < table->capacity; i++) {
+    Entry* entry = &table->entries[i];
+    printf("%d : val=%s\n", i, entry->chars);
+    printValue(entry->value);
+  }
+}
+
 bool tableGet(Table* table, ObjString* key, Value* value) {
   if (table->count == 0) return false;
 
@@ -111,4 +120,5 @@ bool tableGet(Table* table, ObjString* key, Value* value) {
   *value = entry->value;
   return true;
 }
+
 
