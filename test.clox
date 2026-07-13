@@ -1,0 +1,12 @@
+
+{  
+  var a = "local a"; 
+  var b = "local b"; 
+  var c = "local c"; 
+  var d = a + " " + c; 
+  print d; 
+}
+
+{
+  var x = "hello";
+}

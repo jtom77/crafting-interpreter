@@ -62,7 +62,7 @@ static void runFile(const char* path) {
 
 }
 
-int main(void) {
+int testTable(void) {
   initVM();                 // required: sets up vm.strings + object list
 
   Table table;
@@ -74,8 +74,8 @@ int main(void) {
     {"key3", "val3"}
   };
 
-  for (int i=0; i < 2; i++) {
-    printf("Key=%s, Value=%s\n", entries[i][0], entries[i][1]);
+  for (int i=0; i < 3; i++) {
+    // printf("Key=%s, Value=%s\n", entries[i][0], entries[i][1]);
 
     // key and value are both ObjString*, created from C literals
     ObjString* key = copyString(entries[i][0], 4);
@@ -86,9 +86,9 @@ int main(void) {
 
     // read it back
     Value retrieved;
-    if (tableGet(&table, key, &retrieved) && IS_STRING(retrieved)) {
-      printf("%s = %s\n", key->chars, AS_CSTRING(retrieved));
-    }
+    // if (tableGet(&table, key, &retrieved) && IS_STRING(retrieved)) {
+    //   printf("%s = %s\n", key->chars, AS_CSTRING(retrieved));
+    // }
 
     debugTable(&table);
   }
@@ -97,7 +97,7 @@ int main(void) {
   return 0;
 }
 
-int main2(int argc, const char* argv[]) {
+int main(int argc, const char* argv[]) {
   initVM();
 
   if (argc == 1) {

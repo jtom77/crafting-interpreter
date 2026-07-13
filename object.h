@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "value.h"
+#include "table.h"
 
 #define OBJ_TYPE(value)   (AS_OBJ(value)->type)
 #define IS_STRING(value)  isObjType(value, OBJ_STRING)
@@ -31,6 +32,8 @@ ObjString* takeString(char* chars, int length);
 ObjString* copyString(const char* chars, int length);
 
 void printObject(Value value);
+
+ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t hash);
 
 static inline bool isObjType(Value value, ObjType type) {
   return IS_OBJ(value) && AS_OBJ(value)->type == type;

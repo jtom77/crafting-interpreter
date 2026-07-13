@@ -26,14 +26,15 @@ static Entry* findEntry(Entry* entries, int capacity,
   Entry* tombstone = NULL;
   for (;;) {
     Entry* entry = &entries[index];
-    
+    // printf("---> %d - %u - %d\n", capacity, key->hash, index);
+
     if (entry->key == NULL) {
       if (IS_NIL(entry->value)) {
         return tombstone != NULL ? tombstone : entry;
       } else {
         if (tombstone == NULL) tombstone = entry;
       }
-    } else if (entry->key == key) {
+    } else if (entry->key == key) { // String interning: compare for pointer equality
       return entry;
     }
   
@@ -104,18 +105,30 @@ void tableAddAll(Table* from, Table* to) {
 
 
 void debugTable(Table* table) {
+  printf("==== Table capacity = %d ====\n", table->capacity);
   for (int i=0; i < table->capacity; i++) {
     Entry* entry = &table->entries[i];
-    printf("%d : val=%s\n", i, entry->chars);
-    printValue(entry->value);
+    ObjString* objString = entry->key;
+    if (entry->key != NULL) {
+      uint32_t hash = objString->hash;
+      printf("%d | %u | %u | %s | ", i, hash, hash % table->capacity, objString->chars);
+      printValue(entry->value);
+      printf("\n");
+    }
   }
 }
 
 bool tableGet(Table* table, ObjString* key, Value* value) {
-  if (table->count == 0) return false;
+  if (table->count == 0) {
+    printf("Table is null\n");
+    return false;
+  }
 
   Entry* entry = findEntry(table->entries, table->capacity, key);
-  if (entry->key == NULL) return false;
+  if (entry->key == NULL) {
+    printf("entry->key is null\n");
+    return false;
+  }
 
   *value = entry->value;
   return true;
