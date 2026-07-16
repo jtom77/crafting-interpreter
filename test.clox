@@ -1,12 +1,18 @@
-
 {  
-  var a = "local a"; 
-  var b = "local b"; 
-  var c = "local c"; 
-  var d = a + " " + c; 
-  print d; 
+  var index = 1;
+  
+  var s = "";
+
+  var cnt = 5;
+  for (var i = 0; i < 100; i = i + 1) {
+    for (var j = 0; j < 10; j = j + 1) {
+      s = s + "X";      
+    }
+    s = s + "\nY";
+  }
+
+  print s;
+  
 }
 
-{
-  var x = "hello";
-}
+
