@@ -28,6 +28,7 @@ void freeValueArray(ValueArray *array) {
 }
 
 void printValue(Value value) {
+
   switch (value.type) {
   case VAL_BOOL:
     printf(AS_BOOL(value) ? "true" : "false");
