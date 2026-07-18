@@ -1,9 +1,10 @@
-{  
-  fun areWeHavingItYet() {
-    print "Yes we are!";
-  }
-
-  print areWeHavingItYet;
+{
+  var x;
+  var y = 3;
+  x = 2; 
+  print x;
+  print y;
 }
 
-
+var z = 1;
+print z;

@@ -6,6 +6,15 @@
 #include "value.h"
 
 void disassembleChunk(Chunk *chunk, const char *name) {
+  printf("===== Chunk =====\n");
+  printf("Function: %s\n", name);
+  ValueArray arr = chunk->constants;
+  printf("Constants: [");
+  for (int i = 0; i < arr.count; i++) {
+    printf(" ");
+    printValue(arr.values[i]);
+  }
+  printf(" ]\n");
   for (int offset = 0; offset < chunk->count;) {
     offset = disassembleInstruction(chunk, offset);
   }
@@ -65,7 +74,7 @@ int disassembleInstruction(Chunk *chunk, int offset) {
   case OP_GET_GLOBAL:
     return constantInstruction("OP_GET_GLOBAL", chunk, offset);
   case OP_DEFINE_GLOBAL:
-    return simpleInstruction("OP_DEFINE_GLOBAL", offset);
+    return constantInstruction("OP_DEFINE_GLOBAL", chunk, offset);
   case OP_SET_GLOBAL:
     return constantInstruction("OP_SET_GLOBAL", chunk, offset);
   case OP_EQUAL:
