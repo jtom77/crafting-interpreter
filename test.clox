@@ -1,10 +1,5 @@
-{
-  var x;
-  var y = 3;
-  x = 2; 
-  print x;
-  print y;
+fun outer() {
+  print "Hello World";
 }
+outer();
 
-var z = 1;
-print z;
